@@ -6,47 +6,8 @@ import {
   Routes,
 } from "react-router-dom";
 
-import { useFetch } from "./hooks/useFetch";
-import type { CategoriesResponse } from "./types/meal";
+import HomePage from "./pages/HomePage";
 import "./App.css";
-
-// API endpoint for all available recipe categories.
-const CATEGORIES_URL =
-  "https://www.themealdb.com/api/json/v1/1/categories.php";
-
-// Test our reusable fetching hook on the home page.
-function HomePage() {
-  const { data, loading, error } =
-    useFetch<CategoriesResponse>(CATEGORIES_URL);
-
-  return (
-    <section>
-      <h1>Discover Recipes</h1>
-      <p>Explore delicious meals from around the world.</p>
-
-      {/* Show feedback while the request is in progress. */}
-      {loading && <p role="status">Loading categories...</p>}
-
-      {/* Display errors if the request fails. */}
-      {error && <p role="alert">Error: {error}</p>}
-
-      {/* Display the returned category names. */}
-      {data && (
-        <>
-          <h2>Recipe Categories</h2>
-
-          <ul>
-            {data.categories.map((category) => (
-              <li key={category.idCategory}>
-                {category.strCategory}
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-    </section>
-  );
-}
 
 // Temporary category page.
 function CategoryPage() {
