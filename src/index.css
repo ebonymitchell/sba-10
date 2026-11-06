@@ -1,0 +1,40 @@
+/* Use consistent sizing across all elements. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Establish the application's default typography and colors. */
+:root {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  color: #263238;
+  background-color: #f8faf8;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Remove browser default spacing. */
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+/* Keep form controls consistent with the application font. */
+button,
+input {
+  font: inherit;
+}
+
+/* Prevent images from overflowing their containers. */
+img {
+  max-width: 100%;
+}
+
+/* Make keyboard navigation easier to see. */
+:focus-visible {
+  outline: 3px solid #315846;
+  outline-offset: 3px;
+}
