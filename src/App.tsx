@@ -9,6 +9,7 @@ import {
 import HomePage from "./pages/HomePage";
 import CategoryPage from "./pages/CategoryPage";
 import RecipePage from "./pages/RecipePage";
+import StorageDemo from "./pages/StorageDemo";
 
 import "./App.css";
 
@@ -64,7 +65,7 @@ function Navbar() {
   );
 }
 
-// Configure the application's routes.
+// Configure all application routes.
 function AppContent() {
   return (
     <div className="app">
@@ -93,6 +94,9 @@ function AppContent() {
             path="/search"
             element={<SearchPage />}
           />
+
+          {/* Temporary route for testing localStorage. */}
+          <Route path="/storage-demo" element={<StorageDemo />} />
 
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
