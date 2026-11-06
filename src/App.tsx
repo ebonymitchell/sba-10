@@ -6,15 +6,27 @@ import {
   Routes,
 } from "react-router-dom";
 
+import type { MealSummary } from "./types/meal";
 import "./App.css";
 
+// Temporary sample data to verify our TypeScript model.
+const sampleMeal: MealSummary = {
+  idMeal: "52772",
+  strMeal: "Teriyaki Chicken Casserole",
+  strMealThumb:
+    "https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg",
+};
+
 // Temporary home page.
-// Later, this will display recipe categories from TheMealDB.
 function HomePage() {
   return (
     <section>
       <h1>Discover Recipes</h1>
       <p>Explore delicious meals from around the world.</p>
+
+      <h2>Sample Recipe</h2>
+      <p>{sampleMeal.strMeal}</p>
+      <p>Recipe ID: {sampleMeal.idMeal}</p>
     </section>
   );
 }
@@ -59,7 +71,7 @@ function SearchPage() {
   );
 }
 
-// Display a helpful message for unknown URLs.
+// Display a message for unknown URLs.
 function NotFoundPage() {
   return (
     <section>
@@ -70,7 +82,7 @@ function NotFoundPage() {
   );
 }
 
-// Shared navigation appears on every page.
+// Shared navigation.
 function Navbar() {
   return (
     <nav aria-label="Main navigation">
@@ -91,7 +103,7 @@ function Navbar() {
   );
 }
 
-// Configure the application's routes and shared layout.
+// Configure all application routes.
 function AppContent() {
   return (
     <div className="app">
@@ -100,23 +112,16 @@ function AppContent() {
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
-
-          {/* Dynamic category route */}
           <Route
             path="/category/:categoryName"
             element={<CategoryPage />}
           />
-
-          {/* Dynamic recipe detail route */}
           <Route
             path="/recipe/:recipeId"
             element={<RecipePage />}
           />
-
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/search" element={<SearchPage />} />
-
-          {/* Handle unknown routes */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
