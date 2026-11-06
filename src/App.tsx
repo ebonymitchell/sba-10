@@ -14,18 +14,9 @@ import {
 import HomePage from "./pages/HomePage";
 import CategoryPage from "./pages/CategoryPage";
 import RecipePage from "./pages/RecipePage";
+import FavoritesPage from "./pages/FavoritesPage";
 
 import "./App.css";
-
-// Temporary favorites page.
-function FavoritesPage() {
-  return (
-    <section>
-      <h1>My Favorites</h1>
-      <p>Your saved recipes will appear here.</p>
-    </section>
-  );
-}
 
 // Temporary search results page.
 function SearchPage() {
@@ -108,7 +99,7 @@ function AppContent() {
   );
 }
 
-// Provide routing and favorites state throughout the application.
+// Provide routing and shared favorites state.
 export default function App() {
   return (
     <BrowserRouter>
