@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
+import RecipeCardDemo from "./pages/RecipeCardDemo";
 import "./App.css";
 
 // Temporary category page.
@@ -81,7 +82,7 @@ function Navbar() {
   );
 }
 
-// Configure the application's routes.
+// Configure all application routes.
 function AppContent() {
   return (
     <div className="app">
@@ -100,6 +101,10 @@ function AppContent() {
           />
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/search" element={<SearchPage />} />
+
+          {/* Temporary route for testing RecipeCard. */}
+          <Route path="/card-demo" element={<RecipeCardDemo />} />
+
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

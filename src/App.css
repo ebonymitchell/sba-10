@@ -130,6 +130,75 @@ p {
 }
 
 
+/* Display recipe cards in a responsive grid. */
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,
+      minmax(min(100%, 240px), 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* Style each recipe card as a reusable content block. */
+.recipe-card {
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 12px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Add subtle interaction feedback. */
+.recipe-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgb(0 0 0 / 10%);
+}
+
+/* Make the entire card clickable. */
+.recipe-card-link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: #263238;
+  text-decoration: none;
+}
+
+/* Display recipe images consistently. */
+.recipe-card img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+}
+
+/* Arrange card text vertically. */
+.recipe-card-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.recipe-card-content h3 {
+  margin: 0 0 16px;
+  font-size: 1.15rem;
+}
+
+/* Position the action text consistently. */
+.recipe-card-action {
+  margin-top: auto;
+  color: #315846;
+  font-weight: 700;
+}
+
+/* Provide a visible keyboard focus indicator. */
+.recipe-card-link:focus-visible {
+  outline: 3px solid #315846;
+  outline-offset: -3px;
+}
+
+
 @media (max-width: 600px) {
   main {
     padding: 32px 0;
