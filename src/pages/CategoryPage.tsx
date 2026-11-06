@@ -1,23 +1,23 @@
 import { Link, useParams } from "react-router-dom";
 
+import ErrorMessage from "../components/ErrorMessage";
 import RecipeCard from "../components/RecipeCard";
+import Spinner from "../components/Spinner";
 import { useFetch } from "../hooks/useFetch";
 import type { MealSummariesResponse } from "../types/meal";
 
-// Display recipes belonging to the category in the URL.
+// Display recipes belonging to the selected category.
 export default function CategoryPage() {
-    // Read the dynamic :categoryName route parameter.
+    // Read the category name from the dynamic route.
     const { categoryName } = useParams<{ categoryName: string }>();
 
-    // Build the API URL using the selected category.
-    // Passing null prevents requests when the parameter is missing.
+    // Construct the API URL for the selected category.
     const url = categoryName
         ? `https://www.themealdb.com/api/json/v1/1/filter.php?c=${encodeURIComponent(
             categoryName
         )}`
         : null;
 
-    // Fetch recipes using our reusable generic hook.
     const { data, loading, error } =
         useFetch<MealSummariesResponse>(url);
 
@@ -36,19 +36,15 @@ export default function CategoryPage() {
                 </p>
             </header>
 
-            {/* Inform users while the request is loading. */}
-            {loading && (
-                <p role="status">Loading recipes...</p>
-            )}
+            {/* Reusable loading indicator. */}
+            {loading && <Spinner message="Loading recipes..." />}
 
-            {/* Display an error if the API request fails. */}
+            {/* Reusable error display. */}
             {error && (
-                <p role="alert">
-                    Unable to load recipes: {error}
-                </p>
+                <ErrorMessage message={`Unable to load recipes: ${error}`} />
             )}
 
-            {/* Display recipes after the request completes. */}
+            {/* Display the returned recipes. */}
             {!loading && !error && data && (
                 <>
                     {data.meals && data.meals.length > 0 ? (
@@ -59,21 +55,16 @@ export default function CategoryPage() {
 
                             <div className="recipe-grid">
                                 {data.meals.map((meal) => (
-                                    <RecipeCard
-                                        key={meal.idMeal}
-                                        meal={meal}
-                                    />
+                                    <RecipeCard key={meal.idMeal} meal={meal} />
                                 ))}
                             </div>
                         </>
                     ) : (
                         <div className="empty-state">
                             <h2>No Recipes Found</h2>
-
                             <p>
                                 We couldn't find any recipes in this category.
                             </p>
-
                             <Link to="/">Browse Other Categories</Link>
                         </div>
                     )}

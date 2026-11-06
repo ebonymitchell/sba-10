@@ -1,5 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 
+import ErrorMessage from "../components/ErrorMessage";
+import Spinner from "../components/Spinner";
 import { useFavorites } from "../context/FavoritesContext";
 import { useFetch } from "../hooks/useFetch";
 import { getIngredients } from "../types/meal";
@@ -51,14 +53,16 @@ export default function RecipePage() {
                 Back to Categories
             </Link>
 
-            {/* Display feedback during loading. */}
-            {loading && <p role="status">Loading recipe details...</p>}
+            {/* Display the reusable loading indicator. */}
+            {loading && (
+                <Spinner message="Loading recipe details..." />
+            )}
 
-            {/* Display an error if the request fails. */}
+            {/* Display an error if the API request fails. */}
             {error && (
-                <p role="alert">
-                    Unable to load recipe details: {error}
-                </p>
+                <ErrorMessage
+                    message={`Unable to load recipe details: ${error}`}
+                />
             )}
 
             {/* Handle a recipe ID that does not exist. */}
@@ -85,7 +89,9 @@ export default function RecipePage() {
                                 onClick={handleFavoriteToggle}
                                 aria-pressed={saved}
                             >
-                                {saved ? "Remove from Favorites" : "Add to Favorites"}
+                                {saved
+                                    ? "Remove from Favorites"
+                                    : "Add to Favorites"}
                             </button>
                         </div>
 
@@ -100,6 +106,7 @@ export default function RecipePage() {
                         </div>
                     </header>
 
+                    {/* Display the recipe's main image. */}
                     <img
                         className="recipe-hero-image"
                         src={meal.strMealThumb}
@@ -135,7 +142,9 @@ export default function RecipePage() {
                                         .split(/\r?\n/)
                                         .filter((paragraph) => paragraph.trim())
                                         .map((paragraph, index) => (
-                                            <p key={index}>{paragraph.trim()}</p>
+                                            <p key={index}>
+                                                {paragraph.trim()}
+                                            </p>
                                         ))}
                                 </div>
                             ) : (
@@ -144,7 +153,7 @@ export default function RecipePage() {
                         </section>
                     </div>
 
-                    {/* Display optional external resources. */}
+                    {/* Display optional external recipe resources. */}
                     {(meal.strYoutube || meal.strSource) && (
                         <section className="recipe-resources">
                             <h2>Additional Resources</h2>
