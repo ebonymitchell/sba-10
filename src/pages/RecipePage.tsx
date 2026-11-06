@@ -1,29 +1,49 @@
 import { Link, useParams } from "react-router-dom";
 
+import { useFavorites } from "../context/FavoritesContext";
 import { useFetch } from "../hooks/useFetch";
 import { getIngredients } from "../types/meal";
 import type { MealsResponse } from "../types/meal";
 
-// Display the complete details of the recipe selected in the URL.
+// Display the complete details of the selected recipe.
 export default function RecipePage() {
-    // Read the dynamic recipe ID from /recipe/:recipeId.
+    // Read the recipe ID from the current URL.
     const { recipeId } = useParams<{ recipeId: string }>();
 
-    // Build the API URL for the selected recipe.
+    // Access shared favorites state and actions.
+    const { addFavorite, removeFavorite, isFavorite } = useFavorites();
+
+    // Build the API request URL using the selected recipe ID.
     const url = recipeId
         ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${encodeURIComponent(
             recipeId
         )}`
         : null;
 
-    // Fetch the recipe using our reusable custom hook.
+    // Retrieve the selected recipe.
     const { data, loading, error } = useFetch<MealsResponse>(url);
 
-    // The lookup endpoint returns an array, even for one recipe.
+    // The lookup endpoint returns an array containing one recipe.
     const meal = data?.meals?.[0];
 
-    // Convert numbered ingredient fields into a usable array.
+    // Convert numbered ingredient fields into an array.
     const ingredients = meal ? getIngredients(meal) : [];
+
+    // Check whether the current recipe is already a favorite.
+    const saved = meal ? isFavorite(meal.idMeal) : false;
+
+    // Add or remove the recipe depending on its current status.
+    function handleFavoriteToggle() {
+        if (!meal) {
+            return;
+        }
+
+        if (saved) {
+            removeFavorite(meal.idMeal);
+        } else {
+            addFavorite(meal.idMeal);
+        }
+    }
 
     return (
         <section className="recipe-page">
@@ -31,17 +51,17 @@ export default function RecipePage() {
                 Back to Categories
             </Link>
 
-            {/* Display feedback while the request is loading. */}
+            {/* Display feedback during loading. */}
             {loading && <p role="status">Loading recipe details...</p>}
 
-            {/* Display errors without crashing the page. */}
+            {/* Display an error if the request fails. */}
             {error && (
                 <p role="alert">
                     Unable to load recipe details: {error}
                 </p>
             )}
 
-            {/* Handle recipes that do not exist. */}
+            {/* Handle a recipe ID that does not exist. */}
             {!loading && !error && data && !meal && (
                 <div className="empty-state">
                     <h1>Recipe Not Found</h1>
@@ -50,11 +70,24 @@ export default function RecipePage() {
                 </div>
             )}
 
-            {/* Display the complete recipe when available. */}
+            {/* Display recipe information when available. */}
             {!loading && !error && meal && (
                 <article className="recipe-details">
                     <header className="recipe-header">
-                        <h1>{meal.strMeal}</h1>
+                        <div className="recipe-title-row">
+                            <h1>{meal.strMeal}</h1>
+
+                            {/* Toggle this recipe's favorite status. */}
+                            <button
+                                type="button"
+                                className={`favorite-button ${saved ? "is-favorite" : ""
+                                    }`}
+                                onClick={handleFavoriteToggle}
+                                aria-pressed={saved}
+                            >
+                                {saved ? "Remove from Favorites" : "Add to Favorites"}
+                            </button>
+                        </div>
 
                         <div className="recipe-meta">
                             {meal.strCategory && (
@@ -74,7 +107,7 @@ export default function RecipePage() {
                     />
 
                     <div className="recipe-details-grid">
-                        {/* Display each ingredient with its measurement. */}
+                        {/* Display ingredients and measurements. */}
                         <section className="ingredients-section">
                             <h2>Ingredients</h2>
 
@@ -92,7 +125,7 @@ export default function RecipePage() {
                             )}
                         </section>
 
-                        {/* Display the recipe's cooking instructions. */}
+                        {/* Display cooking instructions. */}
                         <section className="instructions-section">
                             <h2>Instructions</h2>
 
@@ -111,7 +144,7 @@ export default function RecipePage() {
                         </section>
                     </div>
 
-                    {/* Display optional external recipe resources. */}
+                    {/* Display optional external resources. */}
                     {(meal.strYoutube || meal.strSource) && (
                         <section className="recipe-resources">
                             <h2>Additional Resources</h2>

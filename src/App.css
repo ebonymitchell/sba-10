@@ -370,6 +370,57 @@ p {
   background: #244434;
 }
 
+
+/* Arrange the recipe title and favorite button. */
+.recipe-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.recipe-title-row h1 {
+  margin: 0;
+}
+
+/* Style the button used to save a recipe. */
+.favorite-button {
+  padding: 12px 20px;
+  border: 2px solid #315846;
+  border-radius: 8px;
+  background: #315846;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.favorite-button:hover {
+  background: #244434;
+}
+
+/* Visually distinguish recipes that are already saved. */
+.favorite-button.is-favorite {
+  background: #ffffff;
+  color: #315846;
+}
+
+.favorite-button.is-favorite:hover {
+  background: #edf3ee;
+}
+
+/* Provide visible keyboard focus. */
+.favorite-button:focus-visible {
+  outline: 3px solid #315846;
+  outline-offset: 3px;
+}
+
+
 @media (max-width: 600px) {
   main {
     padding: 32px 0;
