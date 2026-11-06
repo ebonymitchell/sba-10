@@ -6,10 +6,14 @@ import {
   Routes,
 } from "react-router-dom";
 
+import {
+  FavoritesProvider,
+  useFavorites,
+} from "./context/FavoritesContext";
+
 import HomePage from "./pages/HomePage";
 import CategoryPage from "./pages/CategoryPage";
 import RecipePage from "./pages/RecipePage";
-import StorageDemo from "./pages/StorageDemo";
 
 import "./App.css";
 
@@ -44,8 +48,10 @@ function NotFoundPage() {
   );
 }
 
-// Shared navigation.
+// Shared navigation with a live favorites count.
 function Navbar() {
+  const { favoriteIds } = useFavorites();
+
   return (
     <nav aria-label="Main navigation">
       <Link to="/" className="brand">
@@ -58,14 +64,14 @@ function Navbar() {
         </NavLink>
 
         <NavLink to="/favorites">
-          Favorites
+          Favorites ({favoriteIds.length})
         </NavLink>
       </div>
     </nav>
   );
 }
 
-// Configure all application routes.
+// Configure the application's routes.
 function AppContent() {
   return (
     <div className="app">
@@ -95,9 +101,6 @@ function AppContent() {
             element={<SearchPage />}
           />
 
-          {/* Temporary route for testing localStorage. */}
-          <Route path="/storage-demo" element={<StorageDemo />} />
-
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
@@ -105,11 +108,13 @@ function AppContent() {
   );
 }
 
-// Provide routing throughout the application.
+// Provide routing and favorites state throughout the application.
 export default function App() {
   return (
     <BrowserRouter>
-      <AppContent />
+      <FavoritesProvider>
+        <AppContent />
+      </FavoritesProvider>
     </BrowserRouter>
   );
 }
