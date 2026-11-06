@@ -199,6 +199,46 @@ p {
 }
 
 
+/* Style the link returning to the category list. */
+.back-link {
+  display: inline-block;
+  margin-bottom: 24px;
+  color: #315846;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* Display the number of returned recipes. */
+.results-count {
+  margin: 0 0 20px;
+  color: #606b66;
+  font-weight: 500;
+}
+
+/* Provide a helpful layout when no recipes exist. */
+.empty-state {
+  padding: 48px 24px;
+  border: 1px solid #dddddd;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.empty-state h2 {
+  margin-top: 0;
+}
+
+.empty-state a {
+  display: inline-block;
+  margin-top: 12px;
+  color: #315846;
+  font-weight: 700;
+}
+
+
 @media (max-width: 600px) {
   main {
     padding: 32px 0;

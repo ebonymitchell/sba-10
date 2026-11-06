@@ -7,18 +7,9 @@ import {
 } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
-import RecipeCardDemo from "./pages/RecipeCardDemo";
-import "./App.css";
+import CategoryPage from "./pages/CategoryPage";
 
-// Temporary category page.
-function CategoryPage() {
-  return (
-    <section>
-      <h1>Recipe Category</h1>
-      <p>Recipes from the selected category will appear here.</p>
-    </section>
-  );
-}
+import "./App.css";
 
 // Temporary recipe detail page.
 function RecipePage() {
@@ -82,7 +73,7 @@ function Navbar() {
   );
 }
 
-// Configure all application routes.
+// Configure the application's routes.
 function AppContent() {
   return (
     <div className="app">
@@ -91,19 +82,26 @@ function AppContent() {
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
+
           <Route
             path="/category/:categoryName"
             element={<CategoryPage />}
           />
+
           <Route
             path="/recipe/:recipeId"
             element={<RecipePage />}
           />
-          <Route path="/favorites" element={<FavoritesPage />} />
-          <Route path="/search" element={<SearchPage />} />
 
-          {/* Temporary route for testing RecipeCard. */}
-          <Route path="/card-demo" element={<RecipeCardDemo />} />
+          <Route
+            path="/favorites"
+            element={<FavoritesPage />}
+          />
+
+          <Route
+            path="/search"
+            element={<SearchPage />}
+          />
 
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
