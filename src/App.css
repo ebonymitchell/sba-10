@@ -1,0 +1,56 @@
+/* Center the application content. */
+.app {
+  width: min(100% - 32px, 1100px);
+  margin: 0 auto;
+}
+
+/* Arrange the brand and navigation links horizontally. */
+.app nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 24px 0;
+  border-bottom: 1px solid #dddddd;
+}
+
+/* Distinguish the application name from other links. */
+.brand {
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Space navigation links consistently. */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Highlight the currently selected route. */
+.nav-links a.active {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* Add spacing below the navigation. */
+main {
+  padding: 48px 0;
+}
+
+/* Keep headings and paragraphs readable. */
+h1 {
+  margin-top: 0;
+}
+
+p {
+  line-height: 1.7;
+}
+
+@media (max-width: 600px) {
+  main {
+    padding: 32px 0;
+  }
+}
