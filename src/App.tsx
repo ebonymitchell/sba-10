@@ -6,27 +6,44 @@ import {
   Routes,
 } from "react-router-dom";
 
-import type { MealSummary } from "./types/meal";
+import { useFetch } from "./hooks/useFetch";
+import type { CategoriesResponse } from "./types/meal";
 import "./App.css";
 
-// Temporary sample data to verify our TypeScript model.
-const sampleMeal: MealSummary = {
-  idMeal: "52772",
-  strMeal: "Teriyaki Chicken Casserole",
-  strMealThumb:
-    "https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg",
-};
+// API endpoint for all available recipe categories.
+const CATEGORIES_URL =
+  "https://www.themealdb.com/api/json/v1/1/categories.php";
 
-// Temporary home page.
+// Test our reusable fetching hook on the home page.
 function HomePage() {
+  const { data, loading, error } =
+    useFetch<CategoriesResponse>(CATEGORIES_URL);
+
   return (
     <section>
       <h1>Discover Recipes</h1>
       <p>Explore delicious meals from around the world.</p>
 
-      <h2>Sample Recipe</h2>
-      <p>{sampleMeal.strMeal}</p>
-      <p>Recipe ID: {sampleMeal.idMeal}</p>
+      {/* Show feedback while the request is in progress. */}
+      {loading && <p role="status">Loading categories...</p>}
+
+      {/* Display errors if the request fails. */}
+      {error && <p role="alert">Error: {error}</p>}
+
+      {/* Display the returned category names. */}
+      {data && (
+        <>
+          <h2>Recipe Categories</h2>
+
+          <ul>
+            {data.categories.map((category) => (
+              <li key={category.idCategory}>
+                {category.strCategory}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </section>
   );
 }
@@ -71,7 +88,7 @@ function SearchPage() {
   );
 }
 
-// Display a message for unknown URLs.
+// Display a helpful message for unknown URLs.
 function NotFoundPage() {
   return (
     <section>
@@ -103,7 +120,7 @@ function Navbar() {
   );
 }
 
-// Configure all application routes.
+// Configure the application's routes.
 function AppContent() {
   return (
     <div className="app">
