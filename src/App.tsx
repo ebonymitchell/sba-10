@@ -1,9 +1,12 @@
+import { useState, type SubmitEvent } from "react";
+
 import {
   BrowserRouter,
   Link,
   NavLink,
   Route,
   Routes,
+  useNavigate,
 } from "react-router-dom";
 
 import {
@@ -15,18 +18,9 @@ import HomePage from "./pages/HomePage";
 import CategoryPage from "./pages/CategoryPage";
 import RecipePage from "./pages/RecipePage";
 import FavoritesPage from "./pages/FavoritesPage";
+import SearchPage from "./pages/SearchPage";
 
 import "./App.css";
-
-// Temporary search results page.
-function SearchPage() {
-  return (
-    <section>
-      <h1>Search Results</h1>
-      <p>Matching recipes will appear here.</p>
-    </section>
-  );
-}
 
 // Display a helpful message for unknown URLs.
 function NotFoundPage() {
@@ -39,9 +33,27 @@ function NotFoundPage() {
   );
 }
 
-// Shared navigation with a live favorites count.
+// Shared navigation with search and favorites count.
 function Navbar() {
   const { favoriteIds } = useFavorites();
+  const navigate = useNavigate();
+
+  // Store the search field's current value.
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Navigate to the search results page when the form is submitted.
+  function handleSearch(event: SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const query = searchTerm.trim();
+
+    // Ignore empty search submissions.
+    if (!query) {
+      return;
+    }
+
+    navigate(`/search?query=${encodeURIComponent(query)}`);
+  }
 
   return (
     <nav aria-label="Main navigation">
@@ -58,6 +70,29 @@ function Navbar() {
           Favorites ({favoriteIds.length})
         </NavLink>
       </div>
+
+      {/* Search is available from every page. */}
+      <form
+        className="search-form"
+        role="search"
+        onSubmit={handleSearch}
+      >
+        <label htmlFor="recipe-search" className="visually-hidden">
+          Search recipes
+        </label>
+
+        <input
+          id="recipe-search"
+          type="search"
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+          placeholder="Search recipes..."
+        />
+
+        <button type="submit">
+          Search
+        </button>
+      </form>
     </nav>
   );
 }
