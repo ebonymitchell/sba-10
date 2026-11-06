@@ -8,18 +8,9 @@ import {
 
 import HomePage from "./pages/HomePage";
 import CategoryPage from "./pages/CategoryPage";
+import RecipePage from "./pages/RecipePage";
 
 import "./App.css";
-
-// Temporary recipe detail page.
-function RecipePage() {
-  return (
-    <section>
-      <h1>Recipe Details</h1>
-      <p>Ingredients and cooking instructions will appear here.</p>
-    </section>
-  );
-}
 
 // Temporary favorites page.
 function FavoritesPage() {

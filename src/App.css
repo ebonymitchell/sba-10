@@ -239,6 +239,115 @@ p {
 }
 
 
+/* Space the recipe heading and metadata. */
+.recipe-header {
+  margin-bottom: 24px;
+}
+
+.recipe-header h1 {
+  margin-bottom: 16px;
+}
+
+/* Display category and cuisine labels. */
+.recipe-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.recipe-meta span {
+  padding: 8px 14px;
+  background: #edf3ee;
+  color: #315846;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Display a large, responsive recipe image. */
+.recipe-hero-image {
+  display: block;
+  width: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 40px;
+}
+
+/* Place ingredients beside instructions on larger screens. */
+.recipe-details-grid {
+  display: grid;
+  grid-template-columns: minmax(250px, 1fr) minmax(0, 2fr);
+  gap: 48px;
+}
+
+/* Remove default list spacing. */
+.ingredients-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Separate ingredients and measurements. */
+.ingredients-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.ingredients-list li span:last-child {
+  color: #606b66;
+  text-align: right;
+}
+
+/* Preserve paragraph breaks in cooking instructions. */
+.recipe-instructions p {
+  margin: 0 0 20px;
+  line-height: 1.8;
+}
+
+/* Separate optional resources from the main recipe. */
+.recipe-resources {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid #dddddd;
+}
+
+.resource-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.resource-links a {
+  display: inline-block;
+  padding: 12px 18px;
+  background: #315846;
+  color: #ffffff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.resource-links a:hover {
+  background: #244434;
+}
+
+/* Stack recipe sections on smaller screens. */
+@media (max-width: 700px) {
+  .recipe-details-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .recipe-hero-image {
+    max-height: 320px;
+  }
+}
+
+
 @media (max-width: 600px) {
   main {
     padding: 32px 0;
