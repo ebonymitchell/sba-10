@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 
+import Spinner from "../components/Spinner";
+import ErrorMessage from "../components/ErrorMessage";
 import { useFetch } from "../hooks/useFetch";
 import type { CategoriesResponse } from "../types/meal";
 
@@ -22,20 +24,20 @@ export default function HomePage() {
                 </p>
             </header>
 
-            {/* Show feedback while categories are loading. */}
+            {/* Display our reusable loading indicator. */}
             {loading && (
-                <p role="status">Loading recipe categories...</p>
+                <Spinner message="Loading recipe categories..." />
             )}
 
-            {/* Display API errors without crashing the application. */}
+            {/* Display our reusable error component. */}
             {error && (
-                <p role="alert">
-                    Unable to load recipe categories: {error}
-                </p>
+                <ErrorMessage
+                    message={`Unable to load recipe categories: ${error}`}
+                />
             )}
 
             {/* Display the categories when data is available. */}
-            {data && (
+            {!loading && !error && data && (
                 <>
                     <h2>Browse by Category</h2>
 
